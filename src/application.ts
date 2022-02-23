@@ -2,7 +2,6 @@ import axios from 'axios';
 import { ttnConfig } from './client';
 
 //#region Interfaces
-
 export interface Applications {
   applications: Application[];
 }
@@ -83,11 +82,9 @@ enum ContactMethod {
   CONTACT_METHOD_EMAIL,
   CONTACT_METHOD_PHONE,
 }
-
 //#endregion
 
 //#region Methods
-
 export async function getAllApplications(): Promise<Applications> {
   const url = `${ttnConfig.domain}/api/v3/applications`;
 
@@ -97,5 +94,4 @@ export async function getAllApplications(): Promise<Applications> {
 
   return data;
 }
-
 //#endregion

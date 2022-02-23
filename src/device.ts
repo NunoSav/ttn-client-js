@@ -3,11 +3,10 @@ import {
   ApplicationDownlink,
   ApplicationIdentifiers,
   getAllApplications,
-} from './applications';
+} from './application';
 import { ttnConfig } from './client';
 
 //#region Interfaces
-
 export interface Devices {
   end_devices: Device[];
 }
@@ -150,11 +149,9 @@ enum PayloadFormatter {
   FORMATTER_JAVASCRIPT, //	Custom payload formatter that executes Javascript code. The parameter is a JavaScript filename.
   FORMATTER_CAYENNELPP,
 }
-
 //#endregion
 
 //#region Methods
-
 export async function getAllDevices(): Promise<Devices> {
   const applicationList = await getAllApplications();
   const devices: Devices = {
@@ -178,5 +175,4 @@ export async function getDevices(applicationId: string): Promise<Devices> {
 
   return data;
 }
-
 //#endregion
