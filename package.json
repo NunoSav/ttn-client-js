@@ -1,6 +1,6 @@
 {
   "name": "ttn-client",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Javascript client for The Things Network (v3) API",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -9,7 +9,8 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc -p .",
+    "build": "pnpm run clean && tsc -p .",
+    "clean": "rm -rf dist",
     "publish": "pnpm run build && pnpm publish"
   },
   "repository": {
