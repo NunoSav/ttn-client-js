@@ -1,6 +1,6 @@
-import { Applications, getAllApplications } from "./application";
-import { Device, Devices, getAllDevices, getDevices } from "./device";
-import { downlinkQueuePush, downlinkQueueReplace } from "./downlink";
+import { Applications, getAllApplications } from './application';
+import { Device, Devices, getAllDevices, getDevices } from './device';
+import { downlinkQueuePush, downlinkQueueReplace, Payload } from './downlink';
 
 //#region Interfaces
 export interface ClientOptions {
@@ -23,8 +23,8 @@ interface Client {
   getAllApplications(): Promise<Applications>;
   getAllDevices(): Promise<Devices>;
   getDevices(applicationIdentifier: string): Promise<Devices>;
-  downlinkQueuePush(devices: Device[], base64Payload: string): Promise<void>;
-  downlinkQueueReplace(devices: Device[], base64Payload: string): Promise<void>;
+  downlinkQueuePush(devices: Device[], payload: Payload): Promise<void>;
+  downlinkQueueReplace(devices: Device[], payload: Payload): Promise<void>;
   setAPIKey(key: string): void;
 }
 //#endregion
@@ -37,7 +37,7 @@ export function client(options: ClientOptions): Client {
   ttnConfig.domain = options.domain;
   ttnConfig.headers = {
     Authorization: `Bearer ${options.apiKey}`,
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   };
 
   const response: Client = {
@@ -53,12 +53,12 @@ export function client(options: ClientOptions): Client {
 }
 
 function setAPIKey(key: string): void {
-  const keyParts = key.split(".");
+  const keyParts = key.split('.');
 
   if (keyParts.length !== 3)
     throw new Error(
-      "API Key is malformatted. The key should have the following format: <token-type>.<token-id>.<token-secret>. Refer to https://www.thethingsindustries.com/docs/reference/api/authentication/ for more information."
+      'API Key is malformatted. The key should have the following format: <token-type>.<token-id>.<token-secret>. Refer to https://www.thethingsindustries.com/docs/reference/api/authentication/ for more information.'
     );
-  
+
   ttnConfig.apiKey = key;
 }
