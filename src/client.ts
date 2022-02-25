@@ -7,7 +7,7 @@ export interface ClientOptions {
   /**
    * Personal User API key
    */
-  apiKey: string;
+  apiKey?: string;
 
   /**
    * Domain of your account (e.g.: https://eu1.cloud.thethings.network)
@@ -31,7 +31,8 @@ interface Client {
 export const ttnConfig: TTNConfig = {};
 
 export function client(options: ClientOptions): Client {
-  ttnConfig.apiKey = options.apiKey;
+  if (options.apiKey && options.apiKey !== '') setAPIKey(options.apiKey);
+
   ttnConfig.domain = options.domain;
   ttnConfig.headers = {
     Authorization: `Bearer ${options.apiKey}`,
@@ -47,4 +48,15 @@ export function client(options: ClientOptions): Client {
   };
 
   return response;
+}
+
+function setAPIKey(key: string): void {
+  const keyParts = key.split(".");
+
+  if (keyParts.length !== 3)
+    throw new Error(
+      "API Key is malformatted. The key should have the following format: <token-type>.<token-id>.<token-secret>. Refer to https://www.thethingsindustries.com/docs/reference/api/authentication/ for more information."
+    );
+  
+  ttnConfig.apiKey = key;
 }
