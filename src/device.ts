@@ -64,7 +64,7 @@ export interface Device {
   activated_at: string;
 }
 
-interface DeviceIdentifiers {
+export interface DeviceIdentifiers {
   device_id: string;
   application_ids: ApplicationIdentifiers;
   dev_eui: string;

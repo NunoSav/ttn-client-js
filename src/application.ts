@@ -6,7 +6,7 @@ export interface Applications {
   applications: Application[];
 }
 
-interface Application {
+export interface Application {
   ids: ApplicationIdentifiers;
   created_at: string;
   updated_at: string;

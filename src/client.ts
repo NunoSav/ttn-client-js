@@ -25,6 +25,7 @@ interface Client {
   getDevices(applicationIdentifier: string): Promise<Devices>;
   downlinkQueuePush(devices: Device[], base64Payload: string): Promise<void>;
   downlinkQueueReplace(devices: Device[], base64Payload: string): Promise<void>;
+  setAPIKey(key: string): void;
 }
 //#endregion
 
@@ -45,6 +46,7 @@ export function client(options: ClientOptions): Client {
     getDevices,
     downlinkQueuePush,
     downlinkQueueReplace,
+    setAPIKey,
   };
 
   return response;
