@@ -13,7 +13,7 @@ export interface Downlink {
   f_port: number;
 }
 
-enum DownlinkQueueMethod {
+export enum DownlinkQueueMethod {
   Push = 'push',
   Replace = 'replace',
 }

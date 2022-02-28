@@ -6,6 +6,7 @@ export interface TTNConfig extends Partial<ClientOptions> {
 
 export const ttnConfig: TTNConfig = {};
 
+//#region Methods
 export function setConfigValues(config: TTNConfig): void {
   if (config.apiKey && config.apiKey !== '') setAPIKey(config.apiKey);
   if (config.domain && config.domain !== '') setDomain(config.domain);
@@ -35,3 +36,4 @@ function setHeaders(apiKey: string): void {
     'Content-Type': 'application/json',
   };
 }
+//#endregion
