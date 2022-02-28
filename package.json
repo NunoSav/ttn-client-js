@@ -1,15 +1,16 @@
 {
   "name": "ttn-client",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Javascript client for The Things Network (v3) API",
-  "main": "dist/index.js",
+  "main": "dist/cjs/index.js",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
-    "/dist"
+    "dist"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "pnpm run clean && tsc -p .",
+    "build": "pnpm run clean && tsc -p . && tsc --module commonjs --outDir dist/cjs -p .",
     "clean": "rm -rf dist",
     "publish": "pnpm run build && pnpm publish"
   },
