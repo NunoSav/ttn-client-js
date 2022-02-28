@@ -4,7 +4,7 @@ import {
   ApplicationIdentifiers,
   getAllApplications,
 } from './application';
-import { ttnConfig } from './client';
+import { ttnConfig } from './config';
 
 //#region Interfaces
 export interface Devices {

@@ -1,4 +1,5 @@
 import { Applications, getAllApplications } from './application';
+import { setAPIKey, setConfigValues, setDomain } from './config';
 import { Device, Devices, getAllDevices, getDevices } from './device';
 import { downlinkQueuePush, downlinkQueueReplace, Payload } from './downlink';
 
@@ -15,10 +16,6 @@ export interface ClientOptions {
   domain: string;
 }
 
-interface TTNConfig extends Partial<ClientOptions> {
-  headers?: Record<string, string>;
-}
-
 interface Client {
   getAllApplications(): Promise<Applications>;
   getAllDevices(): Promise<Devices>;
@@ -26,19 +23,12 @@ interface Client {
   downlinkQueuePush(devices: Device[], payload: Payload): Promise<void>;
   downlinkQueueReplace(devices: Device[], payload: Payload): Promise<void>;
   setAPIKey(key: string): void;
+  setDomain(domain: string): void;
 }
 //#endregion
 
-export const ttnConfig: TTNConfig = {};
-
 export function client(options: ClientOptions): Client {
-  if (options.apiKey && options.apiKey !== '') setAPIKey(options.apiKey);
-
-  ttnConfig.domain = options.domain;
-  ttnConfig.headers = {
-    Authorization: `Bearer ${options.apiKey}`,
-    'Content-Type': 'application/json',
-  };
+  setConfigValues(options);
 
   const response: Client = {
     getAllApplications,
@@ -47,18 +37,8 @@ export function client(options: ClientOptions): Client {
     downlinkQueuePush,
     downlinkQueueReplace,
     setAPIKey,
+    setDomain,
   };
 
   return response;
-}
-
-function setAPIKey(key: string): void {
-  const keyParts = key.split('.');
-
-  if (keyParts.length !== 3)
-    throw new Error(
-      'API Key is malformatted. The key should have the following format: <token-type>.<token-id>.<token-secret>. Refer to https://www.thethingsindustries.com/docs/reference/api/authentication/ for more information.'
-    );
-
-  ttnConfig.apiKey = key;
 }

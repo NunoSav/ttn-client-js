@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ttnConfig } from './client';
+import { ttnConfig } from './config';
 
 //#region Interfaces
 export interface Applications {
